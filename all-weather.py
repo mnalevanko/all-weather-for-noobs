@@ -69,7 +69,8 @@ def get_box_weights(ticker_dfs):
 
 def get_environment_weights(ticker_dfs, weights_per_box):
 	def equalize_weights_for_four_vars(v1, v2, v3, v4):
-		w4 = (v1 * v2 * v3) / (v1 * v2 * v3 + v4 * v2 * v3 + v4 * v1 * v3 + v4 * v2 * v3)
+		# probably a problem with the math here
+		w4 = (v1 * v2 * v3) / (v1 * v2 * v3 + v4 * v2 * v3 + v4 * v1 * v3 + v4 * v1 * v2)
 		w1 = (v4 / v1) * w4
 		w2 = (v4 / v2) * w4
 		w3 = (v4 / v3) * w4
