@@ -52,18 +52,18 @@ def get_box_weights(ticker_dfs):
 	vti_weight_gr, dbc_weight_gr = equalize_weights_for_two_vars(vti_vol, dbc_vol)
 
 	# growth falling
-	tlt_weight_gf = 1
+	tlt_weight_gf, gld_weight_gf = equalize_weights_for_two_vars(tlt_vol, gld_vol)
 
 	# inflation rising
-	gld_weight_ir = 1
+	gld_weight_ir, dbc_weight_ir = equalize_weights_for_two_vars(gld_vol, dbc_vol)
 
 	# inflation falling
 	vti_weight_if, tlt_weight_if = equalize_weights_for_two_vars(vti_vol, tlt_vol)
 
 	return {
 		"gr": {"VTI": vti_weight_gr, "DBC": dbc_weight_gr},
-		"gf": {"TLT": tlt_weight_gf},
-		"ir": {"GLD": gld_weight_ir},
+		"gf": {"TLT": tlt_weight_gf, "GLD": gld_weight_gf},
+		"ir": {"GLD": gld_weight_ir, "DBC": dbc_weight_ir},
 		"if": {"TLT": tlt_weight_if, "VTI": vti_weight_if},
 	}
 
@@ -81,8 +81,8 @@ def get_environment_weights(ticker_dfs, weights_per_box):
 	gld_vol = np.std(ticker_dfs['GLD']['Returns'].tail(VOL_WINDOW)) ** 2
 
 	gr_vol = weights_per_box['gr']['VTI'] * vti_vol + weights_per_box['gr']['DBC'] * dbc_vol
-	gf_vol = weights_per_box['gf']['TLT'] * tlt_vol
-	ir_vol = weights_per_box['ir']['GLD'] * gld_vol
+	gf_vol = weights_per_box['gf']['TLT'] * tlt_vol + weights_per_box['gf']['GLD'] * gld_vol
+	ir_vol = weights_per_box['ir']['GLD'] * gld_vol + weights_per_box['ir']['DBC'] * dbc_vol
 	if_vol = weights_per_box['if']['VTI'] * vti_vol + weights_per_box['if']['TLT'] * tlt_vol
 
 	gr_weight, gf_weight, ir_weight, if_weight = \
@@ -108,9 +108,9 @@ def main():
 	print pp.pprint(environment_weights)
 
 	vti_weight = environment_weights['gr'] * box_weights['gr']['VTI'] + environment_weights['if'] * box_weights['if']['VTI']
-	dbc_weight = environment_weights['gr'] * box_weights['gr']['DBC'] 
+	dbc_weight = environment_weights['gr'] * box_weights['gr']['DBC'] + environment_weights['ir'] * box_weights['ir']['DBC']
 	tlt_weight = environment_weights['gf'] * box_weights['gf']['TLT'] + environment_weights['if'] * box_weights['if']['TLT']
-	gld_weight = environment_weights['ir'] * box_weights['ir']['GLD']
+	gld_weight = environment_weights['ir'] * box_weights['ir']['GLD'] + environment_weights['gf'] * box_weights['gf']['GLD']
 
 	weight_dict = {
 		"Date": datetime.datetime.now().strftime("%m/%d/%y"),
@@ -127,7 +127,7 @@ def main():
 	weights.append(weight_dict)
 
 	weights = pd.DataFrame(weights)
-	weights.to_csv(WEIGHTS_FILE, index=False)
+	# weights.to_csv(WEIGHTS_FILE, index=False)
 
 
 main()
