@@ -5,6 +5,7 @@ import pdb
 import numpy as np
 import sys
 import modules.util as util
+import pprint
 
 ##### IMPLEMENTATION DETAILS ##### 
 # All weather done with five assets:
@@ -84,7 +85,8 @@ def get_environment_weights(ticker_dfs, weights_per_box):
 	ir_vol = weights_per_box['ir']['GLD'] * gld_vol
 	if_vol = weights_per_box['if']['VTI'] * vti_vol + weights_per_box['if']['TLT'] * tlt_vol
 
-	gr_weight, gf_weight, ir_weight, if_weight = equalize_weights_for_four_vars(gr_vol, gf_vol, ir_vol, if_vol)
+	gr_weight, gf_weight, ir_weight, if_weight = \
+			equalize_weights_for_four_vars(gr_vol, gf_vol, ir_vol, if_vol)
 
 	return { 
 		"gr": gr_weight,
@@ -94,9 +96,16 @@ def get_environment_weights(ticker_dfs, weights_per_box):
 	}
 
 def main():
+	pp = pprint.PrettyPrinter(indent=4)
+
 	ticker_data = get_ticker_data()
 	box_weights = get_box_weights(ticker_data)
 	environment_weights = get_environment_weights(ticker_data, box_weights)
+
+	print "Box weights"
+	print pp.pprint(box_weights)
+	print "Environment weights"
+	print pp.pprint(environment_weights)
 
 	vti_weight = environment_weights['gr'] * box_weights['gr']['VTI'] + environment_weights['if'] * box_weights['if']['VTI']
 	dbc_weight = environment_weights['gr'] * box_weights['gr']['DBC'] 
@@ -111,7 +120,8 @@ def main():
 		"GLD": gld_weight,
 	}
 
-	print weight_dict
+	print "Final weights"
+	pp.pprint(weight_dict)
 
 	weights = pd.read_csv(WEIGHTS_FILE).T.to_dict().values()
 	weights.append(weight_dict)

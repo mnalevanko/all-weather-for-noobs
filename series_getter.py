@@ -4,7 +4,7 @@ import datetime
 import pdb
 import numpy as np
 import sys
-import modules.util
+import modules.util as util
 
 # Use this to get price data for any ticker from Yahoo! Finance
 # as such: python series_getter.py VTI
@@ -17,7 +17,7 @@ def main():
 
 	for ticker in tickers:
 		print ticker
-		tick_df = get_returns(ticker, start, end)
+		tick_df = util.get_returns(ticker, start, end)
 		print np.std(tick_df['Returns'])
 		tick_df.to_csv("%s.csv" % ticker)
 
