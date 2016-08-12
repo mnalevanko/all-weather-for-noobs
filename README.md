@@ -8,11 +8,21 @@ Gonna fill out this section at some point
 
 In no particular order and subject to revision:
 
-<ol>
+<ul>
 	<li> Equalized variance within boxes before equalizing variance between boxes </li>
 	<li> Didn't sum variances the statistically correct way because "correlation doesn't exist" </li>
 	<li> Used four ETFs -- GLD (gold), DBC (commodities), TLT (long-term treasuries), and VTI (American stock market) </li>
-</ol>
+	<li> I did not include an IL bond asset because there were no IL ETFs that were volatile enough or levered to work out. Gold is an (imperfect) substitute for this. </li>
+</ul>
+
+The All Weather configuration was as such (and also subject to revision):
+
+<ul> 
+	<li>Growth Rising: VTI, DBC</li>
+	<li>Growth Falling: TLT, but should probably also include gold for the inflation</li>
+	<li>Inflation Rising: GLD, but should also probably include commodities </li>
+	<li>Inflation Falling: VTI, TLT</li>
+</ul>
 
 
 <h2> Navigating the Files </h2>
