@@ -13,7 +13,6 @@ import pprint
 # 2) DBC for growth commodities
 # 3) TLT for nominal bonds
 # 4) GLD for inflation-hedge commodities
-# 5) LPTZ for inflation-linked
 # 
 # First we need to equalize the volatility in each growth / inflation box 
 # And then assign equal volatility weights to each
