@@ -128,7 +128,7 @@ def main():
 	weights.append(weight_dict)
 
 	weights = pd.DataFrame(weights)
-	# weights.to_csv(WEIGHTS_FILE, index=False)
+	weights.to_csv(WEIGHTS_FILE, index=False)
 
 
 main()
