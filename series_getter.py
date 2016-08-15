@@ -18,7 +18,7 @@ def main():
 	for ticker in tickers:
 		print ticker
 		tick_df = util.get_returns(ticker, start, end)
-		print np.std(tick_df['Returns'])
+		print np.std(tick_df['Weekly Returns'])
 		tick_df.to_csv("%s.csv" % ticker)
 
 main()
