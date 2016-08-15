@@ -92,10 +92,10 @@ def get_variance_of_series(series, window=VOL_WINDOW):
 	return np.std(series.tail(window)) ** 2
 
 def get_box_weights(ticker_dfs):
-	vti_vol = get_variance_of_series(ticker_dfs['VTI']['Returns'])
-	dbc_vol = get_variance_of_series(ticker_dfs['DBC']['Returns'])
-	tlt_vol = get_variance_of_series(ticker_dfs['TLT']['Returns'])
-	gld_vol = get_variance_of_series(ticker_dfs['GLD']['Returns'])
+	vti_vol = get_variance_of_series(ticker_dfs['VTI']['Weekly Returns'])
+	dbc_vol = get_variance_of_series(ticker_dfs['DBC']['Weekly Returns'])
+	tlt_vol = get_variance_of_series(ticker_dfs['TLT']['Weekly Returns'])
+	gld_vol = get_variance_of_series(ticker_dfs['GLD']['Weekly Returns'])
 
 	# growth rising
 	gr_weights = equalize_weights(vti_vol, dbc_vol)
@@ -125,10 +125,10 @@ def get_box_weights(ticker_dfs):
 	}
 
 def get_environment_weights(ticker_dfs, weights_per_box):
-	vti_vol = get_variance_of_series(ticker_dfs['VTI']['Returns'])
-	dbc_vol = get_variance_of_series(ticker_dfs['DBC']['Returns'])
-	tlt_vol = get_variance_of_series(ticker_dfs['TLT']['Returns'])
-	gld_vol = get_variance_of_series(ticker_dfs['GLD']['Returns'])
+	vti_vol = get_variance_of_series(ticker_dfs['VTI']['Weekly Returns'])
+	dbc_vol = get_variance_of_series(ticker_dfs['DBC']['Weekly Returns'])
+	tlt_vol = get_variance_of_series(ticker_dfs['TLT']['Weekly Returns'])
+	gld_vol = get_variance_of_series(ticker_dfs['GLD']['Weekly Returns'])
 
 	gr_vol = weights_per_box['gr']['VTI'] * vti_vol + weights_per_box['gr']['DBC'] * dbc_vol
 	gf_vol = weights_per_box['gf']['TLT'] * tlt_vol + weights_per_box['gf']['GLD'] * gld_vol
