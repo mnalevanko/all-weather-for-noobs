@@ -59,7 +59,23 @@ def main():
 	weights.append(weight_dict)
 
 	weights = pd.DataFrame(weights)
-	weights.to_csv(WEIGHTS_FILE, index=False)
+	# weights.to_csv(WEIGHTS_FILE, index=False)
+
+def equalize_weights(*args):
+	num_args = len(args)
+	last_vol = args[num_args-1]
+
+	last_vol_over_other_vols = []
+	for i in range(0, num_args-1): 
+		last_vol_over_other_vols.append(last_vol/args[i])
+
+	weight_n = 1.0 / (sum(last_vol_over_other_vols) + 1)
+	weights_i = []
+	for i in range(0, num_args-1):
+		weights_i.append((last_vol / args[i]) * weight_n)
+
+	weights_i.append(weight_n)
+	return weights_i
 
 def get_ticker_data():
 	start = datetime.datetime(1940, 1, 1)
@@ -73,28 +89,30 @@ def get_ticker_data():
 	return ret		
 
 def get_box_weights(ticker_dfs):
-
-	def equalize_weights_for_two_vars(v1, v2):
-		v1_weight = (v2) / (v1 + v2)
-		v2_weight = (v1) / (v1 + v2)
-		return v1_weight, v2_weight
-
 	vti_vol = np.std(ticker_dfs['VTI']['Returns'].tail(VOL_WINDOW)) ** 2
 	dbc_vol = np.std(ticker_dfs['DBC']['Returns'].tail(VOL_WINDOW)) ** 2
 	tlt_vol = np.std(ticker_dfs['TLT']['Returns'].tail(VOL_WINDOW)) ** 2
 	gld_vol = np.std(ticker_dfs['GLD']['Returns'].tail(VOL_WINDOW)) ** 2
 
 	# growth rising
-	vti_weight_gr, dbc_weight_gr = equalize_weights_for_two_vars(vti_vol, dbc_vol)
+	gr_weights = equalize_weights(vti_vol, dbc_vol)
+	vti_weight_gr = gr_weights[0]
+	dbc_weight_gr = gr_weights[1]
 
 	# growth falling
-	tlt_weight_gf, gld_weight_gf = equalize_weights_for_two_vars(tlt_vol, gld_vol)
+	gf_weights = equalize_weights_for_two_vars(tlt_vol, gld_vol)
+	tlt_weight_gf = gf_weights[0]
+	gld_weight_gf = gf_weights[1]
 
 	# inflation rising
-	gld_weight_ir, dbc_weight_ir = equalize_weights_for_two_vars(gld_vol, dbc_vol)
+	ir_weights = equalize_weights(gld_vol, dbc_vol)
+	gld_weight_ir = ir_weights[0]
+	dbc_weight_ir = ir_weights[1]
 
 	# inflation falling
-	vti_weight_if, tlt_weight_if = equalize_weights_for_two_vars(vti_vol, tlt_vol)
+	if_weights = equalize_weights(vti_vol, tlt_vol)
+	vti_weight_if = if_weights[0]
+	tlt_weight_if = if_weights[1]
 
 	return {
 		"gr": {"VTI": vti_weight_gr, "DBC": dbc_weight_gr},
@@ -104,13 +122,6 @@ def get_box_weights(ticker_dfs):
 	}
 
 def get_environment_weights(ticker_dfs, weights_per_box):
-	def equalize_weights_for_four_vars(v1, v2, v3, v4):
-		w4 = (v1 * v2 * v3) / (v1 * v2 * v3 + v4 * v2 * v3 + v4 * v1 * v3 + v4 * v1 * v2)
-		w1 = (v4 / v1) * w4
-		w2 = (v4 / v2) * w4
-		w3 = (v4 / v3) * w4
-		return w1, w2, w3, w4
-
 	vti_vol = np.std(ticker_dfs['VTI']['Returns'].tail(VOL_WINDOW)) ** 2
 	dbc_vol = np.std(ticker_dfs['DBC']['Returns'].tail(VOL_WINDOW)) ** 2
 	tlt_vol = np.std(ticker_dfs['TLT']['Returns'].tail(VOL_WINDOW)) ** 2
@@ -121,8 +132,11 @@ def get_environment_weights(ticker_dfs, weights_per_box):
 	ir_vol = weights_per_box['ir']['GLD'] * gld_vol + weights_per_box['ir']['DBC'] * dbc_vol
 	if_vol = weights_per_box['if']['VTI'] * vti_vol + weights_per_box['if']['TLT'] * tlt_vol
 
-	gr_weight, gf_weight, ir_weight, if_weight = \
-			equalize_weights_for_four_vars(gr_vol, gf_vol, ir_vol, if_vol)
+	environment_weights = equalize_weights(gr_vol, gf_vol, ir_vol, if_vol)
+	gr_weight = environment_weights[0]
+	gf_weight = environment_weights[1]
+	ir_weight = environment_weights[2]
+	if_weight = environment_weights[3]
 
 	return { 
 		"gr": gr_weight,
@@ -132,4 +146,5 @@ def get_environment_weights(ticker_dfs, weights_per_box):
 	}
 
 
-main()
+if __name__ == "__main__":
+	main()
