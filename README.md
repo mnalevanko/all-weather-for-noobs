@@ -16,7 +16,7 @@ In no particular order and subject to revision:
 	<li> Equalized variance within boxes before equalizing variance between boxes </li>
 	<li> Didn't sum variances the statistically correct way because "correlation doesn't exist" </li>
 	<li> Used four ETFs -- GLD (gold), DBC (commodities), TLT (long-term treasuries), and VTI (American stock market) </li>
-	<li> The point of using these ETFs is that they all have roughly similar volatilities (as measured by standard deviation). I didn't double check to make sure that they have the same returns (and thus the same risk/return profiles) since I only have data going back  </li>
+	<li> The point of using these ETFs is that they all have roughly similar volatilities (as measured by standard deviation). I didn't double check to make sure that they have the same returns (and thus the same risk/return profiles) since I only have data going back 8-10 years</li>
 	<li> I did not include an IL bond asset because there were no IL ETFs that were volatile enough or levered to work out. Gold is an (imperfect) substitute for this. </li>
 </ul>
 
@@ -32,14 +32,19 @@ The All Weather configuration was as such (and also subject to revision):
 Since I don't have access to leverage, I can only choose relevant ETFs with similar volatility (and hopefully return) profiles. Below are the volatilities of different ETFs. 
 
 HYG 0.0177601625748 (only goes back to 2008)
+
 EMB 0.0192013473106 (only goes back to 2008)
+
 TLT 0.0185163656414
 
 VTI 0.0254056851964
+
 EEM 0.0380752440487
+
 VGK 0.0323986392606
 
 DBC 0.0283440488481
+
 GLD 0.0272751538992
 
 <h2> Navigating the Files </h2>
