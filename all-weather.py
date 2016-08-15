@@ -86,13 +86,16 @@ def get_ticker_data():
 	for ticker in TICKERS:
 		ret[ticker] = util.get_returns(ticker, start, end)
 
-	return ret		
+	return ret
+
+def get_variance_of_series(series, window=VOL_WINDOW):
+	return np.std(series.tail(window)) ** 2
 
 def get_box_weights(ticker_dfs):
-	vti_vol = np.std(ticker_dfs['VTI']['Returns'].tail(VOL_WINDOW)) ** 2
-	dbc_vol = np.std(ticker_dfs['DBC']['Returns'].tail(VOL_WINDOW)) ** 2
-	tlt_vol = np.std(ticker_dfs['TLT']['Returns'].tail(VOL_WINDOW)) ** 2
-	gld_vol = np.std(ticker_dfs['GLD']['Returns'].tail(VOL_WINDOW)) ** 2
+	vti_vol = get_variance_of_series(ticker_dfs['VTI']['Returns'])
+	dbc_vol = get_variance_of_series(ticker_dfs['DBC']['Returns'])
+	tlt_vol = get_variance_of_series(ticker_dfs['TLT']['Returns'])
+	gld_vol = get_variance_of_series(ticker_dfs['GLD']['Returns'])
 
 	# growth rising
 	gr_weights = equalize_weights(vti_vol, dbc_vol)
@@ -100,7 +103,7 @@ def get_box_weights(ticker_dfs):
 	dbc_weight_gr = gr_weights[1]
 
 	# growth falling
-	gf_weights = equalize_weights_for_two_vars(tlt_vol, gld_vol)
+	gf_weights = equalize_weights(tlt_vol, gld_vol)
 	tlt_weight_gf = gf_weights[0]
 	gld_weight_gf = gf_weights[1]
 
@@ -122,10 +125,10 @@ def get_box_weights(ticker_dfs):
 	}
 
 def get_environment_weights(ticker_dfs, weights_per_box):
-	vti_vol = np.std(ticker_dfs['VTI']['Returns'].tail(VOL_WINDOW)) ** 2
-	dbc_vol = np.std(ticker_dfs['DBC']['Returns'].tail(VOL_WINDOW)) ** 2
-	tlt_vol = np.std(ticker_dfs['TLT']['Returns'].tail(VOL_WINDOW)) ** 2
-	gld_vol = np.std(ticker_dfs['GLD']['Returns'].tail(VOL_WINDOW)) ** 2
+	vti_vol = get_variance_of_series(ticker_dfs['VTI']['Returns'])
+	dbc_vol = get_variance_of_series(ticker_dfs['DBC']['Returns'])
+	tlt_vol = get_variance_of_series(ticker_dfs['TLT']['Returns'])
+	gld_vol = get_variance_of_series(ticker_dfs['GLD']['Returns'])
 
 	gr_vol = weights_per_box['gr']['VTI'] * vti_vol + weights_per_box['gr']['DBC'] * dbc_vol
 	gf_vol = weights_per_box['gf']['TLT'] * tlt_vol + weights_per_box['gf']['GLD'] * gld_vol
