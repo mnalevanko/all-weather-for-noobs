@@ -21,7 +21,7 @@ import pprint
 # by subtracting out covariance as well, since covariance itself is unstable over time
 
 WEIGHTS_FILE = "weights.csv"
-TICKERS = ['VTI', 'DBC', 'TLT', 'GLD', 'HYG']
+TICKERS = ['VTI', 'DBC', 'TLT', 'GLD']
 VOL_WINDOW = 200
 
 
@@ -42,8 +42,6 @@ def main():
 	dbc_weight = environment_weights['gr'] * box_weights['gr']['DBC'] + environment_weights['ir'] * box_weights['ir']['DBC']
 	tlt_weight = environment_weights['gf'] * box_weights['gf']['TLT'] + environment_weights['if'] * box_weights['if']['TLT']
 	gld_weight = environment_weights['ir'] * box_weights['ir']['GLD'] + environment_weights['gf'] * box_weights['gf']['GLD']
-	
-	hyg_weight = environment_weights['gr'] * box_weights['gr']['HYG'] 
 
 	weight_dict = {
 		"Date": datetime.datetime.now().strftime("%m/%d/%y"),
@@ -51,7 +49,6 @@ def main():
 		"DBC": dbc_weight,
 		"TLT": tlt_weight,
 		"GLD": gld_weight,
-		"HYG": hyg_weight
 	}
 
 	print "Final weights"
@@ -62,7 +59,7 @@ def main():
 	weights.append(weight_dict)
 
 	weights = pd.DataFrame(weights)
-	weights.to_csv(WEIGHTS_FILE, index=False)
+	# weights.to_csv(WEIGHTS_FILE, index=False)
 
 def equalize_weights(*args):
 	num_args = len(args)
@@ -100,13 +97,10 @@ def get_box_weights(ticker_dfs):
 	tlt_vol = get_variance_of_series(ticker_dfs['TLT']['Returns'])
 	gld_vol = get_variance_of_series(ticker_dfs['GLD']['Returns'])
 
-	hyg_vol = get_variance_of_series(ticker_dfs['HYG']['Returns'])
-
 	# growth rising
-	gr_weights = equalize_weights(vti_vol, dbc_vol, hyg_vol)
+	gr_weights = equalize_weights(vti_vol, dbc_vol)
 	vti_weight_gr = gr_weights[0]
 	dbc_weight_gr = gr_weights[1]
-	hyg_weight_gr = gr_weights[2]
 
 	# growth falling
 	gf_weights = equalize_weights(tlt_vol, gld_vol)
@@ -124,7 +118,7 @@ def get_box_weights(ticker_dfs):
 	tlt_weight_if = if_weights[1]
 
 	return {
-		"gr": {"VTI": vti_weight_gr, "DBC": dbc_weight_gr, "HYG": hyg_weight_gr},
+		"gr": {"VTI": vti_weight_gr, "DBC": dbc_weight_gr},
 		"gf": {"TLT": tlt_weight_gf, "GLD": gld_weight_gf},
 		"ir": {"GLD": gld_weight_ir, "DBC": dbc_weight_ir},
 		"if": {"TLT": tlt_weight_if, "VTI": vti_weight_if},
@@ -136,11 +130,9 @@ def get_environment_weights(ticker_dfs, weights_per_box):
 	tlt_vol = get_variance_of_series(ticker_dfs['TLT']['Returns'])
 	gld_vol = get_variance_of_series(ticker_dfs['GLD']['Returns'])
 
-	hyg_vol = get_variance_of_series(ticker_dfs['HYG']['Returns'])
-
-	gr_vol = weights_per_box['gr']['VTI'] * vti_vol + weights_per_box['gr']['DBC'] * dbc_vol + weights_per_box['gr']['HYG'] * hyg_vol
+	gr_vol = weights_per_box['gr']['VTI'] * vti_vol + weights_per_box['gr']['DBC'] * dbc_vol
 	gf_vol = weights_per_box['gf']['TLT'] * tlt_vol + weights_per_box['gf']['GLD'] * gld_vol
-	ir_vol = weights_per_box['ir']['GLD'] * gld_vol + weights_per_box['ir']['DBC'] * dbc_vol 
+	ir_vol = weights_per_box['ir']['GLD'] * gld_vol + weights_per_box['ir']['DBC'] * dbc_vol
 	if_vol = weights_per_box['if']['VTI'] * vti_vol + weights_per_box['if']['TLT'] * tlt_vol
 
 	environment_weights = equalize_weights(gr_vol, gf_vol, ir_vol, if_vol)
