@@ -24,6 +24,43 @@ WEIGHTS_FILE = "weights.csv"
 TICKERS = ['VTI', 'DBC', 'TLT', 'GLD']
 VOL_WINDOW = 200
 
+
+def main():
+	pp = pprint.PrettyPrinter(indent=4)
+
+	ticker_data = get_ticker_data() # first get ticker data
+	box_weights = get_box_weights(ticker_data) # then treat each box as its own portfolio and equalize volatility contributions
+	environment_weights = get_environment_weights(ticker_data, box_weights) # then treat each box as an asset itself in a four-asset portfolio and equalize contributions
+
+	print "Box weights"
+	print pp.pprint(box_weights)
+	print "Environment weights"
+	print pp.pprint(environment_weights)
+
+	# find individual asset weight by multiplying box_weights and environment_weights per my all weather configuration
+	vti_weight = environment_weights['gr'] * box_weights['gr']['VTI'] + environment_weights['if'] * box_weights['if']['VTI'] 
+	dbc_weight = environment_weights['gr'] * box_weights['gr']['DBC'] + environment_weights['ir'] * box_weights['ir']['DBC']
+	tlt_weight = environment_weights['gf'] * box_weights['gf']['TLT'] + environment_weights['if'] * box_weights['if']['TLT']
+	gld_weight = environment_weights['ir'] * box_weights['ir']['GLD'] + environment_weights['gf'] * box_weights['gf']['GLD']
+
+	weight_dict = {
+		"Date": datetime.datetime.now().strftime("%m/%d/%y"),
+		"VTI": vti_weight,
+		"DBC": dbc_weight,
+		"TLT": tlt_weight,
+		"GLD": gld_weight,
+	}
+
+	print "Final weights"
+	pp.pprint(weight_dict)
+
+	# update weight file
+	weights = pd.read_csv(WEIGHTS_FILE).T.to_dict().values()
+	weights.append(weight_dict)
+
+	weights = pd.DataFrame(weights)
+	weights.to_csv(WEIGHTS_FILE, index=False)
+
 def get_ticker_data():
 	start = datetime.datetime(1940, 1, 1)
 	end = datetime.datetime.now()
@@ -68,7 +105,6 @@ def get_box_weights(ticker_dfs):
 
 def get_environment_weights(ticker_dfs, weights_per_box):
 	def equalize_weights_for_four_vars(v1, v2, v3, v4):
-		# probably a problem with the math here
 		w4 = (v1 * v2 * v3) / (v1 * v2 * v3 + v4 * v2 * v3 + v4 * v1 * v3 + v4 * v1 * v2)
 		w1 = (v4 / v1) * w4
 		w2 = (v4 / v2) * w4
@@ -94,40 +130,6 @@ def get_environment_weights(ticker_dfs, weights_per_box):
 		"ir": ir_weight,
 		"if": if_weight
 	}
-
-def main():
-	pp = pprint.PrettyPrinter(indent=4)
-
-	ticker_data = get_ticker_data()
-	box_weights = get_box_weights(ticker_data)
-	environment_weights = get_environment_weights(ticker_data, box_weights)
-
-	print "Box weights"
-	print pp.pprint(box_weights)
-	print "Environment weights"
-	print pp.pprint(environment_weights)
-
-	vti_weight = environment_weights['gr'] * box_weights['gr']['VTI'] + environment_weights['if'] * box_weights['if']['VTI']
-	dbc_weight = environment_weights['gr'] * box_weights['gr']['DBC'] + environment_weights['ir'] * box_weights['ir']['DBC']
-	tlt_weight = environment_weights['gf'] * box_weights['gf']['TLT'] + environment_weights['if'] * box_weights['if']['TLT']
-	gld_weight = environment_weights['ir'] * box_weights['ir']['GLD'] + environment_weights['gf'] * box_weights['gf']['GLD']
-
-	weight_dict = {
-		"Date": datetime.datetime.now().strftime("%m/%d/%y"),
-		"VTI": vti_weight,
-		"DBC": dbc_weight,
-		"TLT": tlt_weight,
-		"GLD": gld_weight,
-	}
-
-	print "Final weights"
-	pp.pprint(weight_dict)
-
-	weights = pd.read_csv(WEIGHTS_FILE).T.to_dict().values()
-	weights.append(weight_dict)
-
-	weights = pd.DataFrame(weights)
-	weights.to_csv(WEIGHTS_FILE, index=False)
 
 
 main()
