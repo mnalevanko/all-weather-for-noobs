@@ -13,7 +13,7 @@ def main():
 	start = datetime.datetime(1940, 1, 1)
 	end = datetime.datetime.now()
 
-	tickers = sys.argv[1:]
+	tickers = sys.argv[1:] # command line arguments
 
 	for ticker in tickers:
 		print ticker
