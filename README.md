@@ -10,6 +10,8 @@ CFTC RULE 4.41 – HYPOTHETICAL OR SIMULATED PERFORMANCE RESULTS HAVE CERTAIN LI
 
 <h2> Why All Weather? </h2>
 
+(This section is still under development). 
+
 Will probably need to fill this out a little more but the gist is that the smart and nice people at Wealthfront and related services use some assumptions and premises that are pretty wack -- for example:
 
 <ul>
@@ -18,11 +20,13 @@ Will probably need to fill this out a little more but the gist is that the smart
 	<li> Less theoretically, they assume that "risk tolerance" is proportional to percentage of stocks you own </li>
 </ul>
 
-This strategy was developed and is used by Bridgewater Associates, a macro hedge fund in Connecticut. You can read about the theory behind this strategy <a href="http://www.bwater.com/research-library/the-all-weather-strategy/">here</a> and <a href="http://www.bwater.com/research-library/risk-parity/"">here</a>.
+All Weather, on the other hand, does not make any covariance or expected return assumptions. It also does not equate stock ownership with risk tolerance. 
+
+This strategy was developed and is used by Bridgewater Associates, a macro hedge fund in Connecticut. You can read about the theory behind this strategy <a href="http://www.bwater.com/research-library/the-all-weather-strategy/">here</a> and <a href="http://www.bwater.com/research-library/risk-parity/">here</a>.
+
+It's worth making clear that this work represents my interpretation of publically available documents on Bridgewater's All Weather strategy and their approach to risk parity. They are not identical, nor did I receive or use any classified information during my time at Bridgewater that aided me in my work here.
 
 <h2> Assumptions </h2>
-
-First, it's worth making clear that this work represents my interpretation of publically available documents on Bridgewater's All Weather strategy and their approach to risk parity. They are not identical, nor did I receive or use any classified information during my time at Bridgewater that aided me in my work here.
 
 In no particular order and subject to revision:
 
