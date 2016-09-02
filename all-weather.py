@@ -96,6 +96,8 @@ def finalize_ticker_weights(asset_class_weights, environment_weights, box_weight
 		for ticker in TICKERS[asset_class]:
 			weights_dict[ticker] = asset_class_weights[asset_class][ticker] * weights_by_asset[asset_class]
 
+	weights_dict['Date'] = datetime.now().strftime("%m/%d/%y")
+
 	return weights_dict
 
 def get_ticker_data():
