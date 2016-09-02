@@ -20,7 +20,7 @@ import pprint
 # NOTE: we are not calculating sum of variances the statistically "correct" way
 # by subtracting out covariance as well, since covariance itself is unstable over time
 
-WEIGHTS_FILE = "weights.csv"
+WEIGHTS_FILE = "outputs/weights.csv"
 TICKERS = {"stocks": ['VTI', 'VGK', 'VWO'], "commodities": ['DBC'], "nominal bonds": ['TLT'], "inflation": ['GLD']}
 
 def main():
