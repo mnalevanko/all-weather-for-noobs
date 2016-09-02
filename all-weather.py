@@ -7,6 +7,9 @@ import sys
 import modules.util as util
 import pprint
 
+# TODO fill out the tickers and code with dummy lists for all of the relevant asset classes
+
+
 ##### IMPLEMENTATION DETAILS ##### 
 # All weather done with five assets:
 # 1) VTI for stocks
