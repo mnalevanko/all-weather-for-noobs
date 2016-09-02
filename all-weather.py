@@ -21,7 +21,7 @@ import pprint
 # by subtracting out covariance as well, since covariance itself is unstable over time
 
 WEIGHTS_FILE = "output/weights.csv"
-TICKERS = {"stocks": ['VTI', 'VGK', 'VWO'], "commodities": ['DBC'], "nominal bonds": ['TLT'], "inflation": ['GLD']}
+TICKERS = {"stocks": ['VTI'], "commodities": ['DBC'], "nominal bonds": ['TLT'], "inflation": ['GLD']}
 
 def main():
 	pp = pprint.PrettyPrinter(indent=4)
@@ -96,7 +96,7 @@ def finalize_ticker_weights(asset_class_weights, environment_weights, box_weight
 		for ticker in TICKERS[asset_class]:
 			weights_dict[ticker] = asset_class_weights[asset_class][ticker] * weights_by_asset[asset_class]
 
-	weights_dict['Date'] = datetime.now().strftime("%m/%d/%y")
+	weights_dict['Date'] = datetime.datetime.now().strftime("%m/%d/%y")
 
 	return weights_dict
 
