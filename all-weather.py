@@ -60,7 +60,7 @@ def main():
 	pp.pprint(weight_dict)
 
 	backtesting.backtest(weight_dict, output=True) # yes, this is backtesting with weights we could have only known today, so it's not super rigorous
-	# update_weight_file(weight_dict)
+	update_weight_file(weight_dict)
 
 def update_weight_file(weight_dict):
 	weights = pd.read_csv(WEIGHTS_FILE).T.to_dict().values()
