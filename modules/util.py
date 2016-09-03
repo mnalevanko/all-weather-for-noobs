@@ -6,6 +6,8 @@ import numpy as np
 VOL_WINDOW = 200
 
 def get_returns(ticker, start, end, period=5):
+	start = datetime.datetime(1940, 1, 1)
+	end = datetime.datetime.now()
 	df = web.DataReader(ticker, "yahoo", start, end)
 	df['Weekly Returns'] = df['Adj Close'].pct_change(period)
 	return df
