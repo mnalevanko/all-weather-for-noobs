@@ -48,6 +48,7 @@ def main():
 	print "Environment weights"
 	pp.pprint(environment_weights)
 	print "Final weights"
+	pp.pprint(weight_dict)
 	update_weight_file(weight_dict)
 
 	backtesting.backtest(weight_dict, output=True) # yes, this is backtesting with weights we could have only known today, so it's not super rigorous
@@ -120,10 +121,10 @@ def finalize_ticker_weights(asset_class_weights, environment_weights, box_weight
 	return weights_dict
 
 def get_ticker_data():
+	# get all ticker price data -- we take the window of volatility 
+	# in util.get_variance_of_series
+	start = datetime.datetime(1940, 1, 1)
 	end = datetime.datetime.now()
-	start = datetime.datetime(end.year - 1, end.month, end.day)
-	print start
-	print end
 	print "Getting ticker data..."
 
 	ret = {}
