@@ -20,10 +20,10 @@ import pprint
 WEIGHTS_FILE = "output/weights.csv"
 
 TICKERS = {
-	"stocks": ['VTI', 'VWO', 'VGK', 'EWJ'], 
+	"stocks": ['VTI', 'VWO', 'VGK'], 
 	"commodities": ['DBC'], 
 	"corporate credit": ['HYG'],
-	'EM credit': ["EMB"],  # empty for now, can add
+	'EM credit': [],  # empty for now, can add
 	"nominal bonds": ['TLT'], 
 	"inflation-linked": ['GLD']
 }
@@ -48,15 +48,13 @@ def main():
 	print "Environment weights"
 	pp.pprint(environment_weights)
 	print "Final weights"
-	pp.pprint(weight_dict)
+	update_weight_file(weight_dict)
 
 	backtesting.backtest(weight_dict, output=True) # yes, this is backtesting with weights we could have only known today, so it's not super rigorous
-	update_weight_file(weight_dict)
 
 def update_weight_file(weight_dict):
 	weights = pd.read_csv(WEIGHTS_FILE).T.to_dict().values()
 	weights.append(weight_dict)
-
 	weights = pd.DataFrame(weights)
 	weights.to_csv(WEIGHTS_FILE, index=False)
 
@@ -122,14 +120,16 @@ def finalize_ticker_weights(asset_class_weights, environment_weights, box_weight
 	return weights_dict
 
 def get_ticker_data():
-	start = datetime.datetime(1940, 1, 1)
 	end = datetime.datetime.now()
+	start = datetime.datetime(end.year - 1, end.month, end.day)
+	print start
+	print end
 	print "Getting ticker data..."
 
 	ret = {}
 	for group in TICKERS:
 		for ticker in TICKERS[group]:
-			ret[ticker] = util.get_returns(ticker, start, end)
+			ret[ticker] = util.get_returns(ticker, start=start, end=end)
 
 	return ret
 
