@@ -18,6 +18,7 @@ import pprint
 # by subtracting out covariance as well, since covariance itself is unstable over time
 
 WEIGHTS_FILE = "output/weights.csv"
+VOL_WINDOW = 252
 
 TICKERS = {
 	"stocks": ['VTI', 'VWO', 'VGK'], 
@@ -89,7 +90,7 @@ def equalize_weights(tuples):
 def get_ticker_volatilities(ticker_data):
 	ticker_volatilities = {}
 	for ticker in ticker_data:
-		ticker_volatilities[ticker] = util.get_variance_of_series(ticker_data[ticker]['Weekly Returns'])
+		ticker_volatilities[ticker] = util.get_variance_of_series(ticker_data[ticker]['Weekly Returns'], window=VOL_WINDOW)
 	return ticker_volatilities
 
 # environment_box: gf|gr|ir|if
