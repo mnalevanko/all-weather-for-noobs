@@ -10,16 +10,7 @@ import modules.util as util
 import modules.backtesting as backtesting
 import pprint
 
-# TODO fill out the tickers and code with dummy lists for all of the relevant asset classes
-
-
 ##### IMPLEMENTATION DETAILS ##### 
-# All weather done with five assets:
-# 1) VTI for stocks
-# 2) DBC for growth commodities
-# 3) TLT for nominal bonds
-# 4) GLD for inflation-hedge commodities
-# 
 # First we need to equalize the volatility in each growth / inflation box 
 # And then assign equal volatility weights to each
 # 
@@ -29,10 +20,10 @@ import pprint
 WEIGHTS_FILE = "output/weights.csv"
 
 TICKERS = {
-	"stocks": ['VTI'], 
+	"stocks": ['VTI', 'VWO', 'VGK', 'EWJ'], 
 	"commodities": ['DBC'], 
-	"corporate credit": [], # empty for now, can add
-	'EM credit': [],
+	"corporate credit": ['HYG'],
+	'EM credit': ["EMB"],  # empty for now, can add
 	"nominal bonds": ['TLT'], 
 	"inflation-linked": ['GLD']
 }
