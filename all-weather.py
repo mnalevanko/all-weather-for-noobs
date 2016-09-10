@@ -17,7 +17,7 @@ import pprint
 # NOTE: we are not calculating sum of variances the statistically "correct" way
 # by subtracting out covariance as well, since covariance itself is unstable over time
 
-WEIGHTS_FILE = "output/weights.csv"
+WEIGHTS_FILE = "output/weights_tier1.csv"
 VOL_WINDOW = 252
 
 TICKERS = {
@@ -28,6 +28,13 @@ TICKERS = {
 	"nominal bonds": ['TLT'], 
 	"inflation-linked": ['GLD']
 }
+
+TIER_1_TICKERS = TICKERS.copy() 
+TIER_2_TICKERS = TICKERS.copy()
+TIER_2_TICKERS['corporate credit'] = []
+TIER_3_TICKERS = TICKERS.copy()
+TIER_3_TICKERS['corporate credit'] = []
+TIER_3_TICKERS['stocks'] = ['VTI']
 
 def main():
 	pp = pprint.PrettyPrinter(indent=4)
