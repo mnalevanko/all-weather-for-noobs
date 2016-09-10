@@ -36,6 +36,8 @@ TIER_3_TICKERS = TICKERS.copy()
 TIER_3_TICKERS['corporate credit'] = []
 TIER_3_TICKERS['stocks'] = ['VTI']
 
+TICKERS = TIER_1_TICKERS
+
 def main():
 	pp = pprint.PrettyPrinter(indent=4)
 
