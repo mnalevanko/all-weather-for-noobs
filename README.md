@@ -49,7 +49,9 @@ The All Weather configuration was as such (and also subject to revision):
 
 <h2> Navigating the Files </h2>
 
-The workflow is something like this:
+There are two separate things to be aware of here: the research workflow, which is a mix of Excel and Python, and the output workflow, which is the systematization of insights gained from research.
+
+The research workflow is something like this:
 
 <ol>
 	<li> Use series_getter.py to download price data for ETFs from Yahoo! Finance. This will output them to CSV, which I copied and pasted over to data/all-weather.xlsx</li>
@@ -59,6 +61,7 @@ The workflow is something like this:
 	<li> Plot them in aw-simulated-returns.xlsx. </li>
 </ol>
 
-Yeah yeah I know this is pretty nooby, judge me 
+(Yeah yeah I know this is pretty nooby, judge me).
 
-This is all completely separate from all-weather.py in the main folder, which takes the results of all the above research and systematizes it to spit out weights for the future, based on the last X days' volatilities for each ETF.
+This is all completely separate from all-weather.py in the main folder, which takes the results of all the above research and systematizes it to spit out weights for the future, based on the last X days' volatilities for each ETF. It also outputs 
+rough backtests.
