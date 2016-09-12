@@ -35,14 +35,18 @@ def main():
 	# find individual asset weight by multiplying box_weights and environment_weights per my all weather configuration
 	weight_dict = finalize_ticker_weights(asset_class_weights, environment_weights, box_weights)
 
-	print "Box weights"
+	print "\nVolatilities"
+	pp.pprint(ticker_volatilities)
+	print "\nBox weights"
 	pp.pprint(box_weights)
-	print "Environment weights"
+	print "\nEnvironment weights"
 	pp.pprint(environment_weights)
-	print "Final weights"
+	print "\nFinal weights"
 	pp.pprint(weight_dict)
-	update_weight_file(weight_dict)
 
+	pdb.set_trace()
+
+	update_weight_file(weight_dict)
 	backtesting.backtest(weight_dict, output=True) # yes, this is backtesting with weights we could have only known today, so it's not super rigorous
 
 def update_weight_file(weight_dict):
@@ -51,7 +55,7 @@ def update_weight_file(weight_dict):
 	weights = pd.DataFrame(weights)
 	weights.to_csv(WEIGHTS_FILE, index=False)
 
-# given a tuple of (label, value), return
+# given a tuple of (label, value)s, return
 # risk parity equalized {"label": weight}
 def equalize_weights(tuples):
 	tuples = [tup for tup in tuples if tup[1] != 0.0] # remove zero values
@@ -82,6 +86,16 @@ def get_ticker_volatilities(ticker_data):
 	ticker_volatilities = {}
 	for ticker in ticker_data:
 		ticker_volatilities[ticker] = util.get_variance_of_series(ticker_data[ticker]['Weekly Returns'], window=VOL_WINDOW)
+
+	ticker_volatilities = perform_variance_overrides(ticker_volatilities)
+	return ticker_volatilities
+
+def perform_variance_overrides(ticker_volatilities):
+	for ticker in TICKER_VOLATILITY_OVERRIDES:
+		if (ticker in ticker_volatilities): 
+			print ">> OVERRIDING VOLATILITY FOR %s" % ticker
+			ticker_volatilities[ticker] = TICKER_VOLATILITY_OVERRIDES[ticker]
+
 	return ticker_volatilities
 
 # environment_box: gf|gr|ir|if
