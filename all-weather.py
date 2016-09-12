@@ -24,7 +24,9 @@ def main():
 	pp = pprint.PrettyPrinter(indent=4)
 
 	# first get ticker price and volatility data
+	print ">> Getting ticker data..."
 	ticker_data = get_ticker_data() 
+
 	ticker_volatilities = get_ticker_volatilities(ticker_data)
 	# then treat each group (like stocks) as its own portfolio and equalize volatility contributions
 	asset_class_weights = get_asset_class_weights(ticker_volatilities)
@@ -35,16 +37,14 @@ def main():
 	# find individual asset weight by multiplying box_weights and environment_weights per my all weather configuration
 	weight_dict = finalize_ticker_weights(asset_class_weights, environment_weights, box_weights)
 
-	print "\nVolatilities"
+	print "\n>> Volatilities"
 	pp.pprint(ticker_volatilities)
-	print "\nBox weights"
+	print "\n>> Box weights"
 	pp.pprint(box_weights)
-	print "\nEnvironment weights"
+	print "\n>> Environment weights"
 	pp.pprint(environment_weights)
-	print "\nFinal weights"
+	print "\n>> Final weights"
 	pp.pprint(weight_dict)
-
-	pdb.set_trace()
 
 	update_weight_file(weight_dict)
 	backtesting.backtest(weight_dict, output=True) # yes, this is backtesting with weights we could have only known today, so it's not super rigorous
@@ -93,7 +93,7 @@ def get_ticker_volatilities(ticker_data):
 def perform_variance_overrides(ticker_volatilities):
 	for ticker in TICKER_VOLATILITY_OVERRIDES:
 		if (ticker in ticker_volatilities): 
-			print ">> OVERRIDING VOLATILITY FOR %s" % ticker
+			print ">> Overriding volatility %s. Setting to %0.05f" % (ticker, TICKER_VOLATILITY_OVERRIDES[ticker])
 			ticker_volatilities[ticker] = TICKER_VOLATILITY_OVERRIDES[ticker]
 
 	return ticker_volatilities
@@ -131,7 +131,6 @@ def get_ticker_data():
 	# in util.get_variance_of_series
 	start = datetime.datetime(1940, 1, 1)
 	end = datetime.datetime.now()
-	print "Getting ticker data..."
 
 	ret = {}
 	for group in TICKERS:
