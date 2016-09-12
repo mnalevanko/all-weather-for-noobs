@@ -9,6 +9,7 @@ import sys
 import modules.util as util
 import modules.backtesting as backtesting
 import pprint
+from modules.ticker_settings import *
 
 ##### IMPLEMENTATION DETAILS ##### 
 # First we need to equalize the volatility in each growth / inflation box 
@@ -17,26 +18,7 @@ import pprint
 # NOTE: we are not calculating sum of variances the statistically "correct" way
 # by subtracting out covariance as well, since covariance itself is unstable over time
 
-WEIGHTS_FILE = "output/weights_tier1.csv"
 VOL_WINDOW = 252
-
-TICKERS = {
-	"stocks": ['VTI', 'VWO', 'VGK'], 
-	"commodities": ['DBC'], 
-	"corporate credit": ['HYG'],
-	'EM credit': [],  # empty for now, can add
-	"nominal bonds": ['TLT'], 
-	"inflation-linked": ['GLD']
-}
-
-TIER_1_TICKERS = TICKERS.copy() 
-TIER_2_TICKERS = TICKERS.copy()
-TIER_2_TICKERS['corporate credit'] = []
-TIER_3_TICKERS = TICKERS.copy()
-TIER_3_TICKERS['corporate credit'] = []
-TIER_3_TICKERS['stocks'] = ['VTI']
-
-TICKERS = TIER_1_TICKERS
 
 def main():
 	pp = pprint.PrettyPrinter(indent=4)
