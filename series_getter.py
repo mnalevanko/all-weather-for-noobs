@@ -20,7 +20,7 @@ def main():
 		tick_df['Standard Deviation (60d)'] = pd.rolling_std(tick_df['Weekly Returns'], window=60)
 		tick_df['Standard Deviation (200d)'] = pd.rolling_std(tick_df['Weekly Returns'], window=200)
 
-		print ticker
+		print ticker + " Standard Deviation"
 		print np.std(tick_df['Weekly Returns'])
 		tick_df.to_csv("%s.csv" % ticker)
 
