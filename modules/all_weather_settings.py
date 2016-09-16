@@ -42,12 +42,7 @@ TICKER_TIERS = [
 ###############################################
 # INPUT HERE
 
-TIER_CHOICE = 2
-
-# if TICKER_VOLATILITY_OVERRIDES, then VOLATILITY_WINDOW won't be used for those tickers
-# note that the volatility used in all-weather.py is for whatever reason in different units
-# from the scraped volatility, so you can't mix and match
-
+TIER_CHOICE = 4
 TICKER_VOLATILITY_OVERRIDES = get_implied_volatilities_for_tickers(['TLT', 'GLD', 'DBC', 'HYG', 'VTI', 'VWO', 'VGK'])
 # TICKER_VOLATILITY_OVERRIDES = {}
 VOL_WINDOW = 252
