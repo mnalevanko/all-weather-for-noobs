@@ -9,7 +9,7 @@ import sys
 import modules.util as util
 import modules.backtesting as backtesting
 import pprint
-from modules.ticker_settings import *
+from modules.all_weather_settings import *
 
 ##### IMPLEMENTATION DETAILS ##### 
 # First we need to equalize the volatility in each growth / inflation box 
@@ -17,8 +17,6 @@ from modules.ticker_settings import *
 # 
 # NOTE: we are not calculating sum of variances the statistically "correct" way
 # by subtracting out covariance as well, since covariance itself is unstable over time
-
-VOL_WINDOW = 252
 
 def main():
 	pp = pprint.PrettyPrinter(indent=4)
