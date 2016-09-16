@@ -18,6 +18,11 @@ from modules.all_weather_settings import *
 # NOTE: we are not calculating sum of variances the statistically "correct" way
 # by subtracting out covariance as well, since covariance itself is unstable over time
 
+##### Parameters from all_weather_settings ######
+# TICKER_VOLATILITY_OVERRIDES 
+# TIER_CHOICE
+# VOL_WINDOW
+
 def main():
 	pp = pprint.PrettyPrinter(indent=4)
 
