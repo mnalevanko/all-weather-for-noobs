@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
+import numpy as np
 
+# implied volatility is, in industry, usually in terms of annualized standard deviation
 def get_implied_volatility_for_ticker(ticker):
 	def remove_non_ascii_chars(string):
 		return ''.join(i for i in string if ord(i)<128)
@@ -20,12 +22,18 @@ def get_implied_volatility_for_ticker(ticker):
 					text = remove_non_ascii_chars( td_with_val.getText() )
 					return float(text)
 
-def get_implied_volatilities_for_tickers(tickers):
+def get_implied_volatilities_for_tickers(tickers, get_variance=True):
 	ret = {}
 	for ticker in tickers: 
 		implied_vol = get_implied_volatility_for_ticker(ticker)
+		if (get_variance): implied_vol = convert_annualized_stddev_to_annualized_variance(implied_vol)
 		ret[ticker] = implied_vol
 	return ret
 
+def convert_annualized_stddev_to_annualized_variance(ann_std):
+	variance = (ann_std / np.sqrt(252)) ** 2 
+	return variance * np.sqrt(252)
+
 if __name__ == "__main__":
 	print get_implied_volatilities_for_tickers(['TLT', 'GLD', 'DBC', 'HYG', 'VTI', 'VWO', 'VGK'])
+	print get_implied_volatilities_for_tickers(['TLT', 'GLD', 'DBC', 'HYG', 'VTI', 'VWO', 'VGK'], get_variance = False)
