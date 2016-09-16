@@ -23,10 +23,11 @@ TICKER_TIERS = [(TIER_1_TICKERS, WEIGHTS_FILE_TIER1), (TIER_2_TICKERS, WEIGHTS_F
 ###############################################
 # INPUT HERE
 
-TICKER_VOLATILITY_OVERRIDES = {}
 TIER_CHOICE = 3
 
-VOL_WINDOW = 60
+# if TICKER_VOLATILITY_OVERRIDES, then VOLATILITY_WINDOW won't be used for those tickers
+TICKER_VOLATILITY_OVERRIDES = {}
+VOL_WINDOW = 60 
 
 ###############################################
 
