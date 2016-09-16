@@ -88,7 +88,7 @@ def equalize_weights(tuples):
 def get_ticker_volatilities(ticker_data):
 	ticker_volatilities = {}
 	for ticker in ticker_data:
-		ticker_volatilities[ticker] = util.get_annualized_volatility_of_series(ticker_data[ticker]['Returns'], window=VOL_WINDOW)
+		ticker_volatilities[ticker] = util.get_annualized_variance_of_series(ticker_data[ticker]['Returns'], window=VOL_WINDOW)
 
 	ticker_volatilities = perform_variance_overrides(ticker_volatilities)
 	return ticker_volatilities

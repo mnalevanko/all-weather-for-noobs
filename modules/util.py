@@ -11,7 +11,9 @@ def get_returns(ticker, start=datetime.datetime(1940, 1, 1), end=datetime.dateti
 	df['Log Returns'] = np.log(df['Adj Close']) - np.log(df['Adj Close'].shift(1))
 	return df
 
-def get_annualized_volatility_of_series(series, window=DEFAULT_VOL_WINDOW):
+ # we want variance so that when we sum, we can just do the straight sum
+def get_annualized_variance_of_series(series, window=DEFAULT_VOL_WINDOW):
 	window_std = np.std(series.tail(window))
-	ann_std = window_std * np.sqrt(252) # 252 is number of trading days in a year
-	return ann_std
+	variance = window_std ** 2
+	ann_var = variance * np.sqrt(252) # 252 is number of trading days in a year
+	return ann_var
