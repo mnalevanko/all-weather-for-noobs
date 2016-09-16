@@ -88,7 +88,7 @@ def equalize_weights(tuples):
 def get_ticker_volatilities(ticker_data):
 	ticker_volatilities = {}
 	for ticker in ticker_data:
-		ticker_volatilities[ticker] = util.get_variance_of_series(ticker_data[ticker]['Weekly Returns'], window=VOL_WINDOW)
+		ticker_volatilities[ticker] = util.get_annualized_volatility_of_series(ticker_data[ticker]['Weekly Returns'], window=VOL_WINDOW)
 
 	ticker_volatilities = perform_variance_overrides(ticker_volatilities)
 	return ticker_volatilities
@@ -131,7 +131,7 @@ def finalize_ticker_weights(asset_class_weights, environment_weights, box_weight
 
 def get_ticker_data():
 	# get all ticker price data -- we take the window of volatility 
-	# in util.get_variance_of_series
+	# in util.get_annualized_volatility_of_series
 	start = datetime.datetime(1940, 1, 1)
 	end = datetime.datetime.now()
 

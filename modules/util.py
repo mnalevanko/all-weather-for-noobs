@@ -10,5 +10,5 @@ def get_returns(ticker, start=datetime.datetime(1940, 1, 1), end=datetime.dateti
 	df['Weekly Returns'] = df['Adj Close'].pct_change(period)
 	return df
 
-def get_variance_of_series(series, window=DEFAULT_VOL_WINDOW):
-	return np.std(series.tail(window)) ** 2
+def get_annualized_volatility_of_series(series, window=DEFAULT_VOL_WINDOW):
+	return np.std(series.tail(window)) * np.sqrt(12)
