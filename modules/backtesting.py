@@ -15,7 +15,7 @@ def backtest(weight_dict, output=False):
 
 	for ticker in new_weight_dict:
 		df = util.get_returns(ticker, start, end, period=1)
-		df['%s Returns' % ticker] = df['Weekly Returns']
+		df['%s Returns' % ticker] = df['Returns']
 		df = pd.DataFrame(df['%s Returns' % ticker])
 		returns_dfs.append(df)
 

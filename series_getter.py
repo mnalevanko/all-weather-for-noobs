@@ -17,11 +17,11 @@ def main():
 
 	for ticker in tickers:
 		tick_df = util.get_returns(ticker, start, end)
-		tick_df['Standard Deviation (60d)'] = pd.rolling_std(tick_df['Weekly Returns'], window=60)
-		tick_df['Standard Deviation (200d)'] = pd.rolling_std(tick_df['Weekly Returns'], window=200)
+		tick_df['Standard Deviation (60d)'] = pd.rolling_std(tick_df['Returns'], window=60)
+		tick_df['Standard Deviation (200d)'] = pd.rolling_std(tick_df['Returns'], window=200)
 
 		print ticker + " Standard Deviation"
-		print np.std(tick_df['Weekly Returns'])
+		print np.std(tick_df['Returns'])
 		tick_df.to_csv("%s.csv" % ticker)
 
 if __name__ == "__main__":
