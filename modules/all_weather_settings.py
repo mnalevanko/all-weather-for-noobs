@@ -32,7 +32,7 @@ TIER_CHOICE = 3
 # from the scraped volatility, so you can't mix and match
 
 TICKER_VOLATILITY_OVERRIDES = get_implied_volatilities_for_tickers(['TLT', 'GLD', 'DBC', 'HYG', 'VTI', 'VWO', 'VGK'])
-# TICKER_VOLATILITY_OVERRIDES = {}
+TICKER_VOLATILITY_OVERRIDES = {}
 VOL_WINDOW = 252
 
 ###############################################
