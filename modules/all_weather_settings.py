@@ -1,3 +1,5 @@
+from modules.implied_vol import *
+
 WEIGHTS_FILE_TIER1 = "output/weights_tier1.csv"
 WEIGHTS_FILE_TIER2 = "output/weights_tier2.csv"
 WEIGHTS_FILE_TIER3 = "output/weights_tier3.csv"
@@ -26,7 +28,7 @@ TICKER_TIERS = [(TIER_1_TICKERS, WEIGHTS_FILE_TIER1), (TIER_2_TICKERS, WEIGHTS_F
 TIER_CHOICE = 3
 
 # if TICKER_VOLATILITY_OVERRIDES, then VOLATILITY_WINDOW won't be used for those tickers
-TICKER_VOLATILITY_OVERRIDES = {}
+TICKER_VOLATILITY_OVERRIDES = get_implied_volatilities_for_tickers(['TLT', 'GLD', 'DBC', 'HYG', 'VTI', 'VWO', 'VGK'])
 VOL_WINDOW = 60 
 
 ###############################################

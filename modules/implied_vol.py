@@ -20,11 +20,10 @@ def get_implied_volatility_for_ticker(ticker):
 					text = remove_non_ascii_chars( td_with_val.getText() )
 					return float(text)
 
-def get_implied_volatilities_for_tickers(tickers, get_variance = True):
+def get_implied_volatilities_for_tickers(tickers):
 	ret = {}
 	for ticker in tickers: 
 		implied_vol = get_implied_volatility_for_ticker(ticker)
-		if (get_variance): implied_vol = implied_vol ** 2
 		ret[ticker] = implied_vol
 	return ret
 
