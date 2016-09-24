@@ -1,6 +1,6 @@
 <h1>The Poor Man's All Weather Strategy</h1>
 
-<h2> Obligatory Disclaimer </h2>
+<h2> Disclaimer </h2>
 
 This code is developed for academic and illustrative purposes only and shall not be construed as financial, tax or legal advice or recommendations. The accuracy of the data on this site cannot be guaranteed. Users should use the information provided at their own risk and should always do their own due diligence before any investment decision. The information on this site does not constitute a solicitation for the purchase or sale of securities. No representation or implication is being made that using the information provided here will generate profits or ensure freedom from losses. All ideas and material presented are entirely those of the author and do not necessarily reflect those of the publisher. 
 
