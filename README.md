@@ -20,7 +20,7 @@ All Weather, on the other hand, does not make any covariance or expected return 
 
 This strategy was developed and is used by Bridgewater Associates, a macro hedge fund in Connecticut. You can read about the theory behind this strategy <a href="http://www.bwater.com/research-library/the-all-weather-strategy/">here</a> and <a href="http://www.bwater.com/research-library/risk-parity/">here</a>.
 
-It's worth making clear that this work represents my interpretation of publically available documents on Bridgewater's All Weather strategy and their approach to risk parity. They are not identical, nor did I receive or use any classified information during my time at Bridgewater that aided me in my work here.
+<strong>It's worth making clear that this work represents my interpretation of publically available documents on Bridgewater's All Weather strategy and their approach to risk parity. They are not identical, nor did I receive or use any classified information during my time at Bridgewater that aided me in my work here.</strong>
 
 <h2> Assumptions </h2>
 
