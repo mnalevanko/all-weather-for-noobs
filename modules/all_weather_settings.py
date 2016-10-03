@@ -47,7 +47,7 @@ TICKER_TIERS = [
 ###############################################
 # INPUT HERE
 
-TIER_CHOICE = 5
+TIER_CHOICE = 2
 TICKER_VOLATILITY_OVERRIDES = get_implied_volatilities_for_tickers(['TLT', 'GLD', 'DBC', 'HYG', 'VTI', 'VWO', 'VGK'])
 VOL_WINDOW = 252
 
