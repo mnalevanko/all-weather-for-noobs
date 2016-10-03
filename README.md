@@ -1,8 +1,6 @@
 <h1>The Poor Man's All Weather Strategy</h1>
 
-<h2> Obligatory Disclaimer </h2>
-
-TL;DR Listen here buddy don't go out and log into your little brokerage account and start trading this strategy and then when you lose money come blaming me for it.
+<h2> Disclaimer </h2>
 
 This code is developed for academic and illustrative purposes only and shall not be construed as financial, tax or legal advice or recommendations. The accuracy of the data on this site cannot be guaranteed. Users should use the information provided at their own risk and should always do their own due diligence before any investment decision. The information on this site does not constitute a solicitation for the purchase or sale of securities. No representation or implication is being made that using the information provided here will generate profits or ensure freedom from losses. All ideas and material presented are entirely those of the author and do not necessarily reflect those of the publisher. 
 
@@ -10,9 +8,7 @@ CFTC RULE 4.41 – HYPOTHETICAL OR SIMULATED PERFORMANCE RESULTS HAVE CERTAIN LI
 
 <h2> Why All Weather? </h2>
 
-(This section is still under development). 
-
-Will probably need to fill this out a little more but the gist is that the smart and nice people at Wealthfront and related services use some assumptions and premises that are pretty wack -- for example:
+In short, I believe that the following assumptions of modern portfolio theory are imperfect.
 
 <ul>
 	<li> Assumptions of stable covariance (stocks and bonds are not always negatively correlated) </li>
@@ -20,11 +16,11 @@ Will probably need to fill this out a little more but the gist is that the smart
 	<li> Less theoretically, they assume that "risk tolerance" is proportional to percentage of stocks you own </li>
 </ul>
 
-All Weather, on the other hand, does not make any covariance or expected return assumptions. It also does not equate stock ownership with risk tolerance. 
+All Weather, on the other hand, does not make any covariance or expected return assumptions. It also does not modulate risk by proportion of stocks owned. 
 
 This strategy was developed and is used by Bridgewater Associates, a macro hedge fund in Connecticut. You can read about the theory behind this strategy <a href="http://www.bwater.com/research-library/the-all-weather-strategy/">here</a> and <a href="http://www.bwater.com/research-library/risk-parity/">here</a>.
 
-It's worth making clear that this work represents my interpretation of publically available documents on Bridgewater's All Weather strategy and their approach to risk parity. They are not identical, nor did I receive or use any classified information during my time at Bridgewater that aided me in my work here.
+<strong>It's worth making clear that this work represents my interpretation of publically available documents on Bridgewater's All Weather strategy and their approach to risk parity. They are not identical, nor did I receive or use any classified information during my time at Bridgewater that aided me in my work here.</strong>
 
 <h2> Assumptions </h2>
 
@@ -60,8 +56,6 @@ The research workflow is something like this:
 	<li> Use comparison.py to get the SP500's price data and remove #N/As from aw-simulated returns. Output these to two new files. </li>
 	<li> Plot them in aw-simulated-returns.xlsx. </li>
 </ol>
-
-(Yeah yeah I know this is pretty nooby, judge me).
 
 This is all completely separate from all-weather.py in the main folder, which takes the results of all the above research and systematizes it to spit out weights for the future, based on the last X days' volatilities for each ETF. It also outputs 
 rough backtests.
