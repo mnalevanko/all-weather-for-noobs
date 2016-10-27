@@ -5,6 +5,7 @@ WEIGHTS_FILE_TIER2 = "output/weights_tier2.csv"
 WEIGHTS_FILE_TIER3 = "output/weights_tier3.csv"
 WEIGHTS_FILE_TIER4 = "output/weights_tier3_stocks_only_with_VGK.csv"
 WEIGHTS_FILE_TIER5 = "output/weights_tier3_VGK_HYG.csv"
+WEIGHTS_FILE_TIER6 = "output/weights_VGK_TLT_GLD_DBC.csv"
 
 TICKERS = {
 	"stocks": ['VTI', 'VWO', 'VGK'], 
@@ -36,18 +37,24 @@ TIER_4_TICKERS['stocks'] = ['VTI', 'VGK']
 TIER_5_TICKERS = TICKERS.copy()
 TIER_5_TICKERS['stocks'] = ['VTI', 'VGK']
 
+# VGK, DBC, TLT, GLD
+TIER_6_TICKERS = TICKERS.copy()
+TIER_6_TICKERS['corporate credit'] = []
+TIER_6_TICKERS['stocks'] = ['VGK']
+
 TICKER_TIERS = [
 	(TIER_1_TICKERS, WEIGHTS_FILE_TIER1), 
 	(TIER_2_TICKERS, WEIGHTS_FILE_TIER2), 
 	(TIER_3_TICKERS, WEIGHTS_FILE_TIER3),
 	(TIER_4_TICKERS, WEIGHTS_FILE_TIER4),
-	(TIER_5_TICKERS, WEIGHTS_FILE_TIER5)
+	(TIER_5_TICKERS, WEIGHTS_FILE_TIER5),
+	(TIER_6_TICKERS, WEIGHTS_FILE_TIER6)
 ]
 
 ###############################################
 # INPUT HERE
 
-TIER_CHOICE = 4
+TIER_CHOICE = 6
 # TICKER_VOLATILITY_OVERRIDES = {}
 TICKER_VOLATILITY_OVERRIDES = get_implied_volatilities_for_tickers(['TLT', 'GLD', 'DBC', 'HYG', 'VTI', 'VWO', 'VGK'])
 
